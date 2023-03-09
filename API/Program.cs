@@ -27,6 +27,19 @@ if (app.Environment.IsDevelopment())
 
 app.MapControllers();
 
-using var scope = app.Services
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
 
+try
+{
+    var context = services.GetRequiredService<DataContext>();
+    context.Database.Migrate();
+    await Seed.SeedData(context);
+}
+catch (Exception ex)
+{
+    Console.WriteLine(ex);
+    var logger = services.GetRequiredService<ILogger<Program>>();
+    logger.LogError(ex, "An error has occurred during the migration");
+}
 app.Run();
