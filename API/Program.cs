@@ -19,15 +19,12 @@ builder.Services.AddDbContext<DataContext>(options =>
 builder.Services.AddCors(options => options.AddPolicy("CorsPolicy", policy =>
     policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000")
 ));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(List).Assembly));
 
 var app = builder.Build();
 
 //at first I tried this way, but returned the same error
 //builder.Services.AddMediatR(typeof(List.Handler));
-builder.Services.AddMediatR(cfg =>
-{
-    cfg.RegisterServicesFromAssembly(typeof(List.Handler).Assembly);
-});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
