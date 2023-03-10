@@ -9,10 +9,13 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddDbContext<DataContext>(options =>
-{
-    options.UseSqlite(builder.Configuration.GetConnectionString("defaultConnection"));
-});
+    options.UseSqlite(builder.Configuration.GetConnectionString("defaultConnection")
+));
+builder.Services.AddCors(options => options.AddPolicy("CorsPolicy", policy =>
+    policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000")
+));
 
 var app = builder.Build();
 
@@ -23,8 +26,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//app.UseAuthorization();
-
+app.UseCors("CorsPolicy");
+app.UseAuthorization();
 app.MapControllers();
 
 using var scope = app.Services.CreateScope();
