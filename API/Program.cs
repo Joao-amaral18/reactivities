@@ -22,6 +22,7 @@ builder.Services.AddCors(options => options.AddPolicy("CorsPolicy", policy =>
 
 var app = builder.Build();
 
+//at first I tried this way, but returned the same error
 //builder.Services.AddMediatR(typeof(List.Handler));
 builder.Services.AddMediatR(cfg =>
 {
