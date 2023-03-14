@@ -1,4 +1,4 @@
-using System.Diagnostics;
+using Domain;
 using MediatR;
 using Persistence;
 

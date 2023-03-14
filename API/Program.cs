@@ -22,11 +22,6 @@ builder.Services.AddCors(options => options.AddPolicy("CorsPolicy", policy =>
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(List).Assembly));
 
 var app = builder.Build();
-
-//at first I tried this way, but returned the same error
-//builder.Services.AddMediatR(typeof(List.Handler));
-
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
